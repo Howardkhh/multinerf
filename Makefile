@@ -1,4 +1,5 @@
 IMAGE = howardkhh/multinerf
+DATA = $(shell readlink -f data)
 SHMEM_SIZE = 32G
 
 build:
@@ -7,6 +8,7 @@ build:
 start:
 	docker run --rm	-i -t \
 		-v $(PWD):/root/multinerf \
-		--gpus all \
+		-v $(DATA):/root/multinerf/data \
+		--gpus "device=1" \
 		--shm-size $(SHMEM_SIZE) \
 		$(IMAGE)

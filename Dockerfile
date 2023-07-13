@@ -8,7 +8,40 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update -y \
     && apt-get install -y tzdata && ln -fs /usr/share/zoneinfo/Asia/Taiwan /etc/localtime && dpkg-reconfigure -f noninteractive tzdata \
     && apt install -y sudo vim wget zip git libgl1-mesa-glx libglib2.0-0\
+    cmake \
+    ninja-build \
+    build-essential \
+    libboost-program-options-dev \
+    libboost-filesystem-dev \
+    libboost-graph-dev \
+    libboost-system-dev \
+    libboost-test-dev \
+    libeigen3-dev \
+    libflann-dev \
+    libfreeimage-dev \
+    libmetis-dev \
+    libgoogle-glog-dev \
+    libgtest-dev \
+    libgflags-dev \
+    libsqlite3-dev \
+    libglew-dev \
+    qtbase5-dev \
+    libqt5opengl5-dev \
+    libcgal-dev \
+    libceres-dev \
     && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/colmap/colmap.git \
+    && cd colmap \
+    && git checkout dev \
+    && mkdir build \
+    && sed -i '1s/^/set(CMAKE_CUDA_ARCHITECTURES "all-major") /' CMakeLists.txt \
+    && cd build \
+    && cmake .. -GNinja \
+    && ninja \
+    && sudo ninja install \
+    && cd .. \
+    && rm -rf colmap
 
 COPY ./requirements.txt ./
 RUN wget \
