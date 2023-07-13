@@ -9,6 +9,6 @@ start:
 	docker run --rm	-i -t \
 		-v $(PWD):/root/multinerf \
 		-v $(DATA):/root/multinerf/data \
-		--gpus "device=1" \
+		--gpus all \
 		--shm-size $(SHMEM_SIZE) \
 		$(IMAGE)

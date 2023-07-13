@@ -19,28 +19,24 @@ This is research code, and should be treated accordingly.
 ## Setup
 
 ```
-# Clone the repo.
-git clone https://github.com/google-research/multinerf.git
-cd multinerf
-
-# Make a conda environment.
-conda create --name multinerf python=3.9
-conda activate multinerf
-
-# Prepare pip.
-conda install pip
-pip install --upgrade pip
-
-# Install requirements.
-pip install -r requirements.txt
-
-# Manually install rmbrualla's `pycolmap` (don't use pip's! It's different).
-git clone https://github.com/rmbrualla/pycolmap.git ./internal/pycolmap
-
 # Confirm that all the unit tests pass.
 ./scripts/run_all_unit_tests.sh
+
+# Clone the repo.
+git clone https://github.com/Howardkhh/multinerf.git
+cd multinerf
+
+# Download mip-NeRF 360 data (optional)
+cd /warehouse/<your name>
+mkdir data
+cd data
+wget http://storage.googleapis.com/gresearch/refraw360/360_v2.zip
+unzip 360_v2.zip
+
+# link your data folder
+cd ~/multinerf
+ln -s /warehouse/<your name>/data data
 ```
-You'll probably also need to update your JAX installation to support GPUs or TPUs.
 
 ## Running
 
